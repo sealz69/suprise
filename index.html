@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gëzuar Ditëlindjen Eliii! 🎉</title>
+  <title>Surprize</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
     * {
@@ -234,8 +234,7 @@
   <div id="countdownScreen">
     <div class="countdown-box">
       <div class="countdown-title">
-        ⏳ Hapet më 16 Prill 🎉<br>
-        Pak durim... surpriza po vjen 💚
+        Hapet me 16 Prill<br>
       </div>
       <div id="countdown"></div>
     </div>
@@ -253,7 +252,7 @@
         placeholder="Fjalëkalimi..."
         autocomplete="off">
       
-      <button id="unlockBtn" onclick="checkPassword()">Hap Ditëlindjen! 🎉</button>
+      <button id="unlockBtn" onclick="checkPassword()">Hap Ditëlindjen!</button>
       
       <p id="errorMsg"></p>
       
@@ -297,7 +296,7 @@
           startMusic();
         }, 600);
       } else {
-        errorMsg.textContent = "❌ Fjalëkalim i gabuar! Provo përsëri 💚";
+        errorMsg.textContent = "Fjalekalimi osht i gabuar";
         const box = document.querySelector('.password-box');
         box.style.animation = 'shake 0.4s';
         setTimeout(() => box.style.animation = '', 400);
