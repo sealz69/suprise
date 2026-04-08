@@ -2,183 +2,60 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surprize</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Surpriz!!!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --teal-light: #E0F2F1;
+      --teal-main: #4DD0E1;
+      --teal-dark: #00838F;
+      --cream: #FFFDF7;
+      --caramel: #D4A373;
+      --text-main: #5D6D7E;
+      --message-opacity: 0.5;
     }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       min-height: 100vh;
-      max-height: 100vh;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Nunito', sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       text-align: center;
-      color: #0f2a20;
+      color: var(--text-main);
       background: url('https://usagif.com/wp-content/uploads/gify/cinnamoroll-above-the-clouds-usagif.gif') center/cover no-repeat fixed;
       padding: 2vw;
-      overflow: hidden; /* No scrolling ever */
+      overflow: hidden;
       position: relative;
     }
-
     body::before {
       content: "";
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(44, 155, 110, 0.35);
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(3px);
       z-index: -1;
       pointer-events: none;
     }
-
-    /* PASSWORD SCREEN */
-    #passwordScreen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(15, 42, 32, 0.92);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 2rem;
-      text-align: center;
-      transition: all 0.6s ease;
-    }
-    .password-box {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(16px);
-      border-radius: 3rem;
+    .glass-box {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 2rem;
       padding: 3rem 2.5rem;
-      box-shadow: 0 0 4vw #51ffba;
-      max-width: 420px;
+      box-shadow: 0 8px 32px rgba(77, 208, 225, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      max-width: 450px;
       width: 90%;
-      border: 5px solid #51ffba;
     }
-    .password-title {
-      font-size: 1.5rem;
-      color: #51ffba;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 2vw #2c9b6e;
-    }
-    .password-subtitle {
-      font-size: 1.2rem;
-      color: #c8ffdd;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-    #passwordInput {
-      width: 100%;
-      padding: 18px 24px;
-      font-size: 1.4rem;
-      border: 4px solid #51ffba;
-      border-radius: 60px;
-      text-align: center;
-      margin-bottom: 1rem;
-      outline: none;
-      background: rgba(255,255,255,0.15);
-      color: white;
-      transition: all 0.3s;
-    }
-    #passwordInput:focus {
-      transform: scale(1.05);
-      box-shadow: 0 0 0 8px rgba(81, 255, 186, 0.4);
-    }
-    #unlockBtn {
-      background: #2c9b6e;
-      color: white;
-      border: none;
-      padding: 16px 50px;
-      font-size: 1.3rem;
-      font-weight: 700;
-      border-radius: 60px;
-      cursor: pointer;
-      box-shadow: 0 0 3vw #51ffba;
-      transition: 0.4s;
-    }
-    #unlockBtn:hover {
-      transform: scale(1.15);
-      background: #51ffba;
-      color: #0f2a20;
-    }
-    #errorMsg {
-      color: #ff6666;
-      font-weight: 600;
-      min-height: 28px;
-      margin-top: 1rem;
-    }
-
-    /* TITLE */
-    h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 5vw; /* smaller font */
-      color: #2c9b6e;
-      text-shadow: 0 0 1.5vw #000000, 0 0 3vw #000000;
-      margin-bottom: 2.5vh;
-      animation: glow 2s infinite alternate;
-      z-index: 10;
-      line-height: 1.1;
-    }
-    @keyframes glow {
-      from { transform: scale(1); }
-      to { transform: scale(1.05); }
-    }
-
-    /* SURPRISE BUTTON */
-    #surpriseBtn {
-      padding: 1.5vh 4vw; /* smaller padding */
-      font-size: 3.5vw; /* smaller font */
-      border: none;
-      border-radius: 50px;
-      background: #2c9b6e;
-      color: white;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 0 2vw #51ffba;
-      transition: 0.4s;
-      z-index: 10;
-      margin-bottom: 3vh;
-    }
-    #surpriseBtn:hover {
-      transform: scale(1.2);
-      box-shadow: 0 0 5vw #51ffba;
-    }
-
-    /* MESSAGE (typewriter) */
-    #message {
-      display: none;
-      font-size: 2.5vw; /* smaller font */
-      max-width: 92%;
-      font-weight: 600;
-      color: #0f2a20;
-      font-family: 'Orbitron', sans-serif;
-      text-shadow: 0 0 0.7vw #51ffba;
-      line-height: 1.45;
-      z-index: 10;
-      white-space: pre-wrap;
-      padding: 0 3vw;
-    }
-
-    /* === COUNTDOWN WITH BLACK BACKGROUND (only thing added) === */
     #countdownScreen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
       z-index: 10000;
       display: none;
       align-items: center;
@@ -186,216 +63,858 @@
       flex-direction: column;
       text-align: center;
     }
-    .countdown-box {
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(16px);
-      border-radius: 3rem;
-      padding: 3rem 2.5rem;
-      box-shadow: 0 0 4vw #51ffba;
-      max-width: 520px;
-      width: 90%;
-      border: 5px solid #51ffba;
-    }
     .countdown-title {
-      font-size: 2rem;
-      color: #51ffba;
-      margin-bottom: 1.5rem;
-      text-shadow: 0 0 2vw #2c9b6e;
-      line-height: 1.3;
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
+      color: var(--teal-dark);
+      margin-bottom: 1rem;
     }
     #countdown {
-      font-size: 2.8rem;
+      font-size: clamp(2rem, 10vw, 2.8rem);
+      font-weight: 900;
+      color: var(--caramel);
+      text-shadow: 2px 2px 0px rgba(255,255,255,0.8);
+    }
+    #passwordScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(224, 242, 241, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+    .password-title {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.6rem, 7vw, 2.2rem);
+      color: var(--teal-dark);
+      margin-bottom: 0.5rem;
+    }
+    .password-subtitle {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      color: var(--text-main);
       font-weight: 700;
-      color: #51ffba;
-      text-shadow: 0 0 15px #51ffba, 0 0 30px #2c9b6e;
+      margin-bottom: 1.5rem;
+    }
+    #passwordInput {
+      width: 100%;
+      padding: 16px 24px;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      border: 3px solid var(--teal-main);
+      border-radius: 50px;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      outline: none;
+      background: rgba(255,255,255,0.9);
+      color: var(--teal-dark);
+      transition: all 0.3s;
+      font-weight: 700;
+    }
+    #passwordInput:focus {
+      transform: scale(1.02);
+      box-shadow: 0 0 0 6px rgba(77,208,225,0.3);
+    }
+    #unlockBtn {
+      background: var(--caramel);
+      color: white;
+      border: none;
+      padding: 16px 40px;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-weight: 800;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(212,163,115,0.4);
+      transition: 0.3s;
+    }
+    #unlockBtn:hover {
+      transform: translateY(-5px) scale(1.05);
+      background: #c38c5b;
+    }
+    #errorMsg {
+      color: #E74C3C;
+      font-weight: 700;
+      min-height: 28px;
+      margin-top: 1rem;
+    }
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(2rem, 8vw, 4.5vw);
+      color: var(--teal-dark);
+      text-shadow: 2px 2px 4px rgba(255,255,255,0.8);
+      margin-bottom: 3vh;
+      z-index: 10;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    #surpriseBtn {
+      padding: 1.5vh 3vw;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      font-family: 'Nunito', sans-serif;
+      border: none;
+      border-radius: 50px;
+      background: var(--teal-main);
+      color: white;
+      cursor: pointer;
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(77,208,225,0.5);
+      transition: 0.3s;
+      z-index: 10;
+      margin-bottom: 3vh;
+    }
+    #surpriseBtn:hover {
+      transform: translateY(-5px) scale(1.1);
+      background: var(--teal-dark);
+    }
+    #message {
+      display: none;
+      font-size: clamp(1rem, 4vw, 1.5rem);
+      max-width: 800px;
+      width: 90%;
+      font-weight: 700;
+      color: var(--teal-dark);
+      line-height: 1.5;
+      z-index: 10;
+      white-space: pre-wrap;
+      padding: 1.2rem 1.8rem;
+      background: rgba(255,255,255, var(--message-opacity));
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 2px solid white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+    /* Game container styles - compact and responsive */
+    #gameContainer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(145deg, #0b7a7a 0%, #2aa3a3 100%);
+      z-index: 10001;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 12px;
+    }
+    .game-card {
+      background: rgba(220, 255, 255, 0.45);
+      backdrop-filter: blur(8px);
+      border-radius: 32px;
+      padding: 16px 16px 20px;
+      box-shadow: 0 20px 40px rgba(0, 80, 80, 0.3);
+      border: 2px solid #b3ecec;
+      max-width: 500px;
+      width: 100%;
+    }
+    .game-title {
+      font-family: 'Pacifico', cursive;
+      font-size: clamp(1.4rem, 6vw, 1.8rem);
+      color: #e0f7fa;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .game-title span {
+      background: #c6f5f5;
+      padding: 4px 12px;
+      border-radius: 60px;
+      font-size: clamp(0.8rem, 3.5vw, 1rem);
+      box-shadow: inset 0 2px 5px #a6d6d6, 0 4px 0 #2a8a8a;
+      color: #0b4f4f;
+    }
+    #gameCanvas {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1/1;
+      background: #8ed6d6;
+      background-image: radial-gradient(circle at 30% 25%, #b0e6e6 0%, #5ebdbd 100%);
+      border-radius: 24px;
+      box-shadow: inset 0 0 0 2px #d6ffff, 0 8px 0 #307a7a, 0 10px 15px rgba(0,60,60,0.25);
+      border: 2px solid #e2ffff;
+      cursor: pointer;
+      touch-action: none;
+    }
+    .stats-panel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 6px;
+      margin: 12px 4px 8px;
+    }
+    .stat-box {
+      background: #d9f6f6;
+      padding: 6px 12px;
+      border-radius: 30px;
+      font-size: clamp(0.7rem, 3vw, 0.9rem);
+      font-weight: 700;
+      color: #005f5f;
+      box-shadow: inset 0 2px 4px #b2e0e0, 0 3px 0 #1f7a7a;
+      border: 1px solid #aaf0f0;
+      flex: 1 1 auto;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .game-buttons {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 8px 0;
+      flex-wrap: wrap;
+    }
+    .game-btn {
+      background: #6fd9d9;
+      border: none;
+      border-bottom: 4px solid #2b8a8a;
+      font-size: clamp(0.8rem, 3.5vw, 0.95rem);
+      font-weight: bold;
+      padding: 8px 16px;
+      border-radius: 40px;
+      color: #023b3b;
+      box-shadow: 0 4px 0 #1d6b6b, 0 4px 10px rgba(0,100,100,0.2);
+      cursor: pointer;
+      transition: all 0.05s;
+      font-family: inherit;
+      border: 1px solid #bef7f7;
+      flex: 1 1 120px;
+    }
+    .game-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #1d6b6b, 0 4px 10px rgba(0,100,100,0.15);
+      border-bottom-width: 2px;
+    }
+    .hint {
+      text-align: center;
+      color: #c2f0f0;
+      margin-top: 6px;
+      font-weight: 600;
+      font-size: clamp(0.7rem, 3vw, 0.9rem);
+    }
+    #luajBtn {
+      background: var(--caramel);
+      color: white;
+      border: none;
+      padding: 10px 28px;
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-weight: 800;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(212,163,115,0.4);
+      transition: 0.3s;
+      margin-top: 8px;
+    }
+    #luajBtn:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: #c38c5b;
     }
 
-    /* Media Queries */
-    @media (max-width: 1200px) {
-      h1 { font-size: 6.5vw; }
-      #message { font-size: 3vw; }
-      #surpriseBtn { font-size: 4.5vw; padding: 1.8vh 5vw; }
-    }
-    @media (max-width: 768px) {
-      h1 { font-size: 8vw; }
-      #message { font-size: 3.5vw; }
-      #surpriseBtn { font-size: 5vw; padding: 2vh 5.5vw; }
-    }
+    /* Small screen fine-tuning */
     @media (max-width: 480px) {
-      h1 { font-size: 9.5vw; }
-      #message { font-size: 4vw; }
-      #surpriseBtn { font-size: 6vw; padding: 2.2vh 6vw; }
+      body { padding: 1.5vw; }
+      #message {
+        padding: 1rem 1.2rem;
+        width: 95%;
+      }
+      .stats-panel {
+        flex-direction: column;
+        gap: 5px;
+      }
+      .stat-box {
+        width: 100%;
+      }
+      .game-buttons {
+        flex-direction: row;
+      }
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
     }
   </style>
 </head>
 <body>
-
-  <!-- COUNTDOWN SCREEN (black background) -->
   <div id="countdownScreen">
-    <div class="countdown-box">
-      <div class="countdown-title">
-        Hapet me 16 Prill<br>
-      </div>
+    <div class="glass-box">
+      <div class="countdown-title">Hapet me 16 Prill</div>
       <div id="countdown"></div>
     </div>
   </div>
-
-  <!-- PASSWORD SCREEN -->
   <div id="passwordScreen">
-    <div class="password-box">
-      <div class="password-title">HAPPY BIRTHDAY ELI!</div>
-      <div class="password-subtitle">Fut fjalekalimin</div>
-      
-      <input 
-        id="passwordInput" 
-        type="password" 
-        placeholder="Fjalëkalimi..."
-        autocomplete="off">
-      
-      <button id="unlockBtn" onclick="checkPassword()">Hap Ditëlindjen!</button>
-      
+    <div class="glass-box">
+      <div class="password-title">Gëzuar Ditëlindjen Eli!</div>
+      <div class="password-subtitle">Fut fjalëkalimin</div>
+      <input id="passwordInput" type="password" placeholder="Shkruaj këtu..." autocomplete="off">
+      <button id="unlockBtn">Hap Surprizën!</button>
       <p id="errorMsg"></p>
-      
-      <small style="margin-top: 1.5rem; display: block; color: #c8ffdd; font-size: 1rem;">
-        Hint: embelsira jote e preferuar
+      <small style="margin-top:1.5rem; display:block; color:var(--teal-dark); font-weight:700;">
+         Hint: Ëmbëlsira jote e preferuar
       </small>
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
   <h1>Gëzuar Ditëlindjen Eliii!</h1>
-  
-  <button id="surpriseBtn">🎁</button>
-  
+  <button id="surpriseBtn">Kliko për Surprizën</button>
   <div id="message">
     <p id="typed"></p>
+    <div style="text-align: center;">
+      <button id="luajBtn" style="display:none;">Luaj</button>
+    </div>
   </div>
 
-  <!-- AUDIO -->
+  <!-- Game container (compact) -->
+  <div id="gameContainer">
+    <div class="game-card">
+      <div class="game-title">
+         Kap Cinnamoroll
+      </div>
+      <canvas id="gameCanvas" width="500" height="500"></canvas>
+      <div class="stats-panel">
+        <div class="stat-box">🏆 Rekordi: <span id="highScoreDisplay">0</span></div>
+        <div class="stat-box">⏱️ Koha totale: <span id="totalTimeDisplay">0</span>s</div>
+      </div>
+      <div class="stats-panel">
+        <div class="stat-box">🐾 Pikët: <span id="scoreDisplay">0</span></div>
+        <div class="stat-box">🎯 Kjo lojë: <span id="sessionTimeDisplay">0</span>s</div>
+      </div>
+      <div class="game-buttons">
+        <button class="game-btn" id="resetGameBtn">🔄 Rifillo</button>
+        <button class="game-btn" id="backBtn">⬅️ Kthehu</button>
+      </div>
+      <div class="hint">Kliko Cinnamoroll! Shpejtësia rritet çdo herë.</div>
+    </div>
+  </div>
+
+  <!-- 🎵 AUDIO ELEMENT WITH LOOP ATTRIBUTE 🎵 -->
   <audio id="music" loop preload="auto">
     <source src="song.mp3" type="audio/mpeg">
     Shfletuesi yt nuk e mbështet audio-n.
   </audio>
 
   <script>
-    const faLink = document.createElement('link');
-    faLink.rel = 'stylesheet';
-    faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';
-    document.head.appendChild(faLink);
-
-    const correctPassword = "trilece";
-
-    function checkPassword() {
-      const input = document.getElementById('passwordInput').value.trim().toLowerCase();
+    (function() {
+      // ---------- BIRTHDAY WEBSITE LOGIC ----------
+      const correctPassword = "trilece";
+      const passwordScreen = document.getElementById('passwordScreen');
+      const passwordInput = document.getElementById('passwordInput');
       const errorMsg = document.getElementById('errorMsg');
-      
-      if (input === correctPassword) {
-        document.getElementById('passwordScreen').style.opacity = '0';
-        setTimeout(() => {
-          document.getElementById('passwordScreen').style.display = 'none';
+      const unlockBtn = document.getElementById('unlockBtn');
+      const music = document.getElementById('music');
+      const btn = document.getElementById("surpriseBtn");
+      const messageDiv = document.getElementById("message");
+      const typed = document.getElementById("typed");
+      const countdownScreen = document.getElementById("countdownScreen");
+      const countdownEl = document.getElementById("countdown");
+      const luajBtn = document.getElementById('luajBtn');
+
+      let musicFadeInterval = null;
+      let musicPlaying = false;
+      let musicLoadFailed = false;   // ← flag for missing audio
+      let countdownFinished = false;
+
+      // 👇 If song.mp3 is missing, just continue quietly
+      music.addEventListener('error', () => {
+        musicLoadFailed = true;
+        console.log('🎵 Song not found – continuing without music.');
+      });
+
+      function checkPassword() {
+        const input = passwordInput.value.trim().toLowerCase();
+        if (input === correctPassword) {
+          passwordScreen.style.display = 'none';
           startMusic();
-        }, 600);
-      } else {
-        errorMsg.textContent = "Fjalekalimi osht i gabuar";
-        const box = document.querySelector('.password-box');
-        box.style.animation = 'shake 0.4s';
-        setTimeout(() => box.style.animation = '', 400);
+        } else {
+          errorMsg.textContent = "Fjalëkalim i gabuar!";
+          const box = passwordScreen.querySelector('.glass-box');
+          box.style.animation = 'shake 0.4s';
+          setTimeout(() => box.style.animation = '', 400);
+        }
       }
-    }
 
-    document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') checkPassword();
-    });
+      unlockBtn.addEventListener('click', checkPassword);
+      passwordInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') checkPassword();
+      });
 
-    const style = document.createElement('style');
-    style.innerHTML = `@keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }`;
-    document.head.appendChild(style);
-
-    const music = document.getElementById('music');
-
-    function startMusic() {
-      music.volume = 0;
-      music.play()
-        .then(() => {
+      function startMusic() {
+        if (musicPlaying || musicLoadFailed) return;   // ← skip if song missing
+        music.volume = 0;
+        music.play().then(() => {
+          musicPlaying = true;
           let vol = 0;
-          const fade = setInterval(() => {
+          if (musicFadeInterval) clearInterval(musicFadeInterval);
+          musicFadeInterval = setInterval(() => {
             vol += 0.08;
             if (vol >= 1) {
               vol = 1;
-              clearInterval(fade);
+              clearInterval(musicFadeInterval);
+              musicFadeInterval = null;
             }
             music.volume = vol;
           }, 80);
-        })
-        .catch(() => {});
-    }
-
-    window.addEventListener('load', () => { startMusic(); });
-
-    const btn = document.getElementById("surpriseBtn");
-    const messageDiv = document.getElementById("message");
-    const typed = document.getElementById("typed");
-
-    const fullText = 'TE UROJ GJITHE TE MIRAT NE DITELINDJEN TENDE DHE SHPRESOJ QE PO JA KALON MIR! DOJA TE TE THOJA QE KE QEN SHOQJA IME ME MIRE NE BOTE DHE DUA TE TE THEM SA SHUME DO TE THOTE PER MUA. TE DUA SHUME DHE JAM SHUME ME FAT QE TE KAM NE JETEN TIME, DHE FALEMINDERIT QE ME KE MBESHTETUR KUDO DHE CDO HER. SHPRESOJ QE TE JEMI SA ME MIR!!!';
-
-    let index = 0;
-
-    function typeWriter() {
-      if (index < fullText.length) {
-        if (fullText.charAt(index) === '\n') typed.innerHTML += '<br>';
-        else typed.innerHTML += fullText.charAt(index);
-        index++;
-        setTimeout(typeWriter, 75);
+        }).catch(() => {
+          // If play fails for any other reason, mark as failed and continue
+          musicLoadFailed = true;
+        });
       }
-    }
 
-    btn.onclick = () => {
-      btn.style.display = "none";        /* disappears after one click */
-      messageDiv.style.display = "block";
-      typed.innerHTML = '';
-      index = 0;
-      typeWriter();
+      const fullText = 'Të uroj gjithë të mirat në ditëlindjen tënde dhe shpresoj që po ja kalon mirë! \n\nDoja të të thoja që ke qenë shoqja ime më e mirë në botë dhe dua të të them sa shumë do të thotë për mua. Të dua shumë dhe jam shumë me fat që të kam në jetën time, dhe faleminderit që më ke mbështetur kudo dhe çdo herë. \n\nShpresoj që të jemi sa më mirë!!!';
+      let index = 0;
+      let typingFinished = false;
       
-      if (music.paused) startMusic();
-    };
-
-    music.addEventListener('error', () => {
-      console.log("song.mp3 nuk u gjet – sigurohu që është në të njëjtën dosje");
-    });
-
-    /* === COUNTDOWN WITH BLACK BACKGROUND (only this was added) === */
-    const countdownScreen = document.getElementById("countdownScreen");
-    const countdownEl = document.getElementById("countdown");
-
-    const target = new Date();
-    target.setMonth(3);
-    target.setDate(16);
-    target.setHours(0,0,0,0);
-
-    function updateCountdown() {
-      const now = new Date();
-      const diff = target - now;
-
-      if (diff <= 0) {
-        countdownScreen.style.display = "none";
-        document.getElementById('passwordScreen').style.display = 'flex';
-        return;
+      function typeWriter() {
+        if (index < fullText.length) {
+          if (fullText.charAt(index) === '\n') typed.innerHTML += '<br>';
+          else typed.innerHTML += fullText.charAt(index);
+          index++;
+          setTimeout(typeWriter, 50);
+        } else {
+          typingFinished = true;
+          luajBtn.style.display = 'inline-block';
+          luajBtn.style.animation = 'float 1.5s ease-in-out infinite';
+        }
       }
 
-      const d = Math.floor(diff / (1000*60*60*24));
-      const h = Math.floor((diff/(1000*60*60))%24);
-      const m = Math.floor((diff/(1000*60))%60);
-      const s = Math.floor((diff/1000)%60);
+      btn.addEventListener('click', () => {
+        btn.style.display = "none";
+        messageDiv.style.display = "block";
+        typed.innerHTML = '';
+        index = 0;
+        typingFinished = false;
+        luajBtn.style.display = 'none';
+        luajBtn.style.animation = '';
+        typeWriter();
+        if (!musicPlaying && !musicLoadFailed) startMusic();
+      });
 
-      countdownEl.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
-    }
+      function getTargetDate() {
+        const now = new Date();
+        const target = new Date(now.getFullYear(), 3, 1); // April 16
+        target.setHours(0, 0, 0, 0);
+        return target;
+      }
 
-    window.addEventListener('load', () => {
-      document.getElementById('passwordScreen').style.display = 'none';
-      countdownScreen.style.display = 'flex';
-      updateCountdown();
-      setInterval(updateCountdown, 1000);
-    });
+      const target = getTargetDate();
+
+      function updateCountdown() {
+        const now = new Date();
+        const diff = target - now;
+
+        if (diff <= 0) {
+          if (!countdownFinished) {
+            countdownScreen.style.display = "none";
+            passwordScreen.style.display = 'flex';
+            countdownFinished = true;
+          }
+          return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const m = Math.floor((diff / (1000 * 60)) % 60);
+        const s = Math.floor((diff / 1000) % 60);
+        countdownEl.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
+      }
+
+      window.addEventListener('load', () => {
+        passwordScreen.style.display = 'none';
+        countdownScreen.style.display = 'flex';
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+      });
+
+      // ---------- GAME LOGIC ----------
+      const gameContainer = document.getElementById('gameContainer');
+      const canvas = document.getElementById('gameCanvas');
+      const ctx = canvas.getContext('2d');
+      const scoreSpan = document.getElementById('scoreDisplay');
+      const highScoreSpan = document.getElementById('highScoreDisplay');
+      const totalTimeSpan = document.getElementById('totalTimeDisplay');
+      const sessionTimeSpan = document.getElementById('sessionTimeDisplay');
+
+      let score = 0;
+      let speed = 3.2;
+      const BASE_SPEED = 3.2;
+      const SPEED_MULTIPLIER = 1.35;
+      let cinnaX = 250, cinnaY = 250;
+      const CINNA_RADIUS = 48;
+      let dirX = 0.8, dirY = 0.6;
+      let animationId = null;
+      let gameActive = false;
+
+      let sessionStartTime = null;
+      let sessionTimerInterval = null;
+      let totalPlayTime = parseInt(localStorage.getItem('cinnaTotalTime')) || 0;
+      let highScore = parseInt(localStorage.getItem('cinnaHighScore')) || 0;
+      highScoreSpan.textContent = highScore;
+      totalTimeSpan.textContent = totalPlayTime;
+
+      function normalizeDirection() {
+        const len = Math.hypot(dirX, dirY);
+        if (len > 0.001) { dirX /= len; dirY /= len; }
+        else { dirX = 1; dirY = 0; }
+      }
+
+      function randomizeDirection() {
+        let angle = Math.random() * Math.PI * 2;
+        dirX = Math.cos(angle);
+        dirY = Math.sin(angle);
+      }
+
+      function clampPosition() {
+        const minX = CINNA_RADIUS, maxX = canvas.width - CINNA_RADIUS;
+        const minY = CINNA_RADIUS, maxY = canvas.height - CINNA_RADIUS;
+        cinnaX = Math.min(maxX, Math.max(minX, cinnaX));
+        cinnaY = Math.min(maxY, Math.max(minY, cinnaY));
+      }
+
+      function handleWallCollision() {
+        const r = CINNA_RADIUS;
+        let bounced = false;
+        if (cinnaX - r < 0) { cinnaX = r; dirX = -dirX; bounced = true; }
+        else if (cinnaX + r > canvas.width) { cinnaX = canvas.width - r; dirX = -dirX; bounced = true; }
+        if (cinnaY - r < 0) { cinnaY = r; dirY = -dirY; bounced = true; }
+        else if (cinnaY + r > canvas.height) { cinnaY = canvas.height - r; dirY = -dirY; bounced = true; }
+        if (bounced) normalizeDirection();
+      }
+
+      function updatePosition() {
+        cinnaX += dirX * speed;
+        cinnaY += dirY * speed;
+        handleWallCollision();
+        clampPosition();
+      }
+
+      function drawCinnamoroll(x, y, r) {
+        ctx.save();
+        ctx.shadowColor = '#5b9b9b';
+        ctx.shadowBlur = 14;
+        ctx.shadowOffsetY = 4;
+
+        const bodyGrad = ctx.createRadialGradient(x-8, y-8, r*0.2, x, y, r*1.1);
+        bodyGrad.addColorStop(0, '#FFFFFF');
+        bodyGrad.addColorStop(0.7, '#F5F9FF');
+        bodyGrad.addColorStop(1, '#E0EAF5');
+        ctx.beginPath();
+        ctx.ellipse(x, y, r*1.1, r*0.98, 0, 0, Math.PI*2);
+        ctx.fillStyle = bodyGrad;
+        ctx.fill();
+        ctx.shadowBlur = 8;
+        ctx.strokeStyle = '#C8DDE8';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.ellipse(x - r*0.65, y - r*0.55, r*0.28, r*0.75, -0.25, 0, Math.PI*2);
+        const leftEarGrad = ctx.createLinearGradient(x - r*0.8, y - r*0.9, x - r*0.5, y);
+        leftEarGrad.addColorStop(0, '#FFFFFF');
+        leftEarGrad.addColorStop(1, '#F0F5FA');
+        ctx.fillStyle = leftEarGrad;
+        ctx.fill();
+        ctx.strokeStyle = '#C8DDE8';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(x - r*0.65, y - r*0.55, r*0.14, r*0.5, -0.25, 0, Math.PI*2);
+        const innerEarGrad = ctx.createRadialGradient(x - r*0.7, y - r*0.7, 2, x - r*0.6, y - r*0.5, r*0.4);
+        innerEarGrad.addColorStop(0, '#FFB0C3');
+        innerEarGrad.addColorStop(1, '#FFD0DC');
+        ctx.fillStyle = innerEarGrad;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(x + r*0.65, y - r*0.55, r*0.28, r*0.75, 0.25, 0, Math.PI*2);
+        const rightEarGrad = ctx.createLinearGradient(x + r*0.5, y - r*0.9, x + r*0.8, y);
+        rightEarGrad.addColorStop(0, '#FFFFFF');
+        rightEarGrad.addColorStop(1, '#F0F5FA');
+        ctx.fillStyle = rightEarGrad;
+        ctx.fill();
+        ctx.strokeStyle = '#C8DDE8';
+        ctx.lineWidth = 2.2;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(x + r*0.65, y - r*0.55, r*0.14, r*0.5, 0.25, 0, Math.PI*2);
+        ctx.fillStyle = innerEarGrad;
+        ctx.fill();
+
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.ellipse(x - r*0.2, y - r*0.65, r*0.22, r*0.16, -0.1, 0, Math.PI*2);
+        ctx.fillStyle = '#FFA5B9';
+        ctx.fill();
+        ctx.strokeStyle = '#E07A8F';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.ellipse(x + r*0.2, y - r*0.65, r*0.22, r*0.16, 0.1, 0, Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x, y - r*0.63, r*0.1, 0, 2*Math.PI);
+        ctx.fillStyle = '#FF7A95';
+        ctx.fill();
+        ctx.strokeStyle = '#E06A85';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x - r*0.05, y - r*0.53);
+        ctx.lineTo(x - r*0.3, y - r*0.4);
+        ctx.lineTo(x - r*0.1, y - r*0.5);
+        ctx.fillStyle = '#FFB0C3';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x + r*0.05, y - r*0.53);
+        ctx.lineTo(x + r*0.3, y - r*0.4);
+        ctx.lineTo(x + r*0.1, y - r*0.5);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.beginPath();
+        ctx.arc(x - r*0.3, y - r*0.1, r*0.18, 0, 2*Math.PI);
+        const eyeGrad = ctx.createRadialGradient(x - r*0.35, y - r*0.15, 2, x - r*0.3, y - r*0.1, r*0.18);
+        eyeGrad.addColorStop(0, '#6BB5E0');
+        eyeGrad.addColorStop(1, '#2A6F9C');
+        ctx.fillStyle = eyeGrad;
+        ctx.fill();
+        ctx.strokeStyle = '#1C5F8E';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x - r*0.38, y - r*0.18, r*0.06, 0, 2*Math.PI);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x - r*0.26, y - r*0.05, r*0.03, 0, 2*Math.PI);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(x + r*0.3, y - r*0.1, r*0.18, 0, 2*Math.PI);
+        ctx.fillStyle = eyeGrad;
+        ctx.fill();
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(x + r*0.22, y - r*0.18, r*0.06, 0, 2*Math.PI);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + r*0.34, y - r*0.05, r*0.03, 0, 2*Math.PI);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x - r*0.15, y + r*0.12);
+        ctx.quadraticCurveTo(x, y + r*0.28, x + r*0.15, y + r*0.12);
+        ctx.strokeStyle = '#C06A7A';
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        const blushGrad = ctx.createRadialGradient(x - r*0.5, y + r*0.05, 2, x - r*0.5, y + r*0.05, r*0.15);
+        blushGrad.addColorStop(0, '#FFB6C1');
+        blushGrad.addColorStop(1, '#FFD0D8');
+        ctx.beginPath();
+        ctx.arc(x - r*0.5, y + r*0.05, r*0.14, 0, 2*Math.PI);
+        ctx.fillStyle = blushGrad;
+        ctx.globalAlpha = 0.55;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + r*0.5, y + r*0.05, r*0.14, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(x - r*0.85, y + r*0.15, r*0.2, 0, 2*Math.PI);
+        const tailGrad = ctx.createRadialGradient(x - r*0.9, y + r*0.1, 2, x - r*0.8, y + r*0.2, r*0.2);
+        tailGrad.addColorStop(0, '#FFFFFF');
+        tailGrad.addColorStop(1, '#E8F0F8');
+        ctx.fillStyle = tailGrad;
+        ctx.fill();
+        ctx.strokeStyle = '#C8DDE8';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawScene() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#c1efef90';
+        ctx.shadowColor = '#6eaeae';
+        ctx.shadowBlur = 20;
+        ctx.beginPath();
+        ctx.arc(80, 70, 45, 0, Math.PI*2);
+        ctx.arc(130, 50, 35, 0, Math.PI*2);
+        ctx.arc(170, 80, 30, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(420, 130, 40, 0, Math.PI*2);
+        ctx.arc(470, 100, 30, 0, Math.PI*2);
+        ctx.arc(380, 90, 25, 0, Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        drawCinnamoroll(cinnaX, cinnaY, CINNA_RADIUS);
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+      }
+
+      function isClickOnCinna(clickX, clickY) {
+        return Math.hypot(clickX - cinnaX, clickY - cinnaY) <= CINNA_RADIUS * 1.1;
+      }
+
+      function updateHighScore() {
+        if (score > highScore) {
+          highScore = score;
+          localStorage.setItem('cinnaHighScore', highScore);
+          highScoreSpan.textContent = highScore;
+        }
+      }
+
+      function caughtCinnamoroll() {
+        score++;
+        scoreSpan.textContent = score;
+        updateHighScore();
+        speed *= SPEED_MULTIPLIER;
+        const r = CINNA_RADIUS;
+        cinnaX = Math.random() * (canvas.width - 2*r) + r;
+        cinnaY = Math.random() * (canvas.height - 2*r) + r;
+        randomizeDirection();
+        normalizeDirection();
+      }
+
+      function resetGame() {
+        score = 0;
+        speed = BASE_SPEED;
+        scoreSpan.textContent = '0';
+        cinnaX = canvas.width/2;
+        cinnaY = canvas.height/2;
+        randomizeDirection();
+        normalizeDirection();
+        drawScene();
+      }
+
+      function gameLoop() {
+        if (!gameActive) return;
+        updatePosition();
+        drawScene();
+        animationId = requestAnimationFrame(gameLoop);
+      }
+
+      function startGameLoop() {
+        if (animationId) cancelAnimationFrame(animationId);
+        gameActive = true;
+        animationId = requestAnimationFrame(gameLoop);
+      }
+
+      function stopGameLoop() {
+        gameActive = false;
+        if (animationId) cancelAnimationFrame(animationId);
+        animationId = null;
+      }
+
+      function startSessionTimer() {
+        sessionStartTime = Date.now();
+        if (sessionTimerInterval) clearInterval(sessionTimerInterval);
+        sessionTimerInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+          sessionTimeSpan.textContent = elapsed;
+        }, 1000);
+      }
+
+      function stopSessionTimer() {
+        if (sessionTimerInterval) {
+          clearInterval(sessionTimerInterval);
+          sessionTimerInterval = null;
+        }
+        if (sessionStartTime) {
+          const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+          totalPlayTime += elapsed;
+          localStorage.setItem('cinnaTotalTime', totalPlayTime);
+          totalTimeSpan.textContent = totalPlayTime;
+          sessionTimeSpan.textContent = '0';
+          sessionStartTime = null;
+        }
+      }
+
+      function showGame() {
+        document.querySelector('h1').style.display = 'none';
+        btn.style.display = 'none';
+        messageDiv.style.display = 'none';
+        gameContainer.style.display = 'flex';
+        resetGame();
+        startSessionTimer();
+        startGameLoop();
+      }
+
+      function hideGame() {
+        stopGameLoop();
+        stopSessionTimer();
+        gameContainer.style.display = 'none';
+        if (passwordScreen.style.display !== 'flex' && countdownScreen.style.display !== 'flex') {
+          document.querySelector('h1').style.display = 'block';
+          if (typingFinished) {
+            messageDiv.style.display = 'block';
+            luajBtn.style.display = 'inline-block';
+          } else {
+            btn.style.display = 'block';
+          }
+        }
+      }
+
+      function handleCanvasInteraction(e) {
+        if (!gameActive) return;
+        e.preventDefault();
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        let clientX, clientY;
+        if (e.touches) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+        const canvasX = (clientX - rect.left) * scaleX;
+        const canvasY = (clientY - rect.top) * scaleY;
+        if (isClickOnCinna(canvasX, canvasY)) {
+          caughtCinnamoroll();
+          drawScene();
+        }
+      }
+
+      canvas.addEventListener('click', handleCanvasInteraction);
+      canvas.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        handleCanvasInteraction(e);
+      }, { passive: false });
+      canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+      document.getElementById('resetGameBtn').addEventListener('click', () => {
+        resetGame();
+        drawScene();
+      });
+
+      document.getElementById('backBtn').addEventListener('click', hideGame);
+
+      luajBtn.addEventListener('click', showGame);
+
+      resetGame();
+      drawScene();
+    })();
   </script>
 </body>
 </html>
