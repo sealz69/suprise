@@ -2,7 +2,7 @@
 <html lang="sq">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Surpriz!!!</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Pacifico&display=swap" rel="stylesheet">
   <style>
@@ -209,7 +209,7 @@
       padding: 16px 16px 20px;
       box-shadow: 0 20px 40px rgba(0, 80, 80, 0.3);
       border: 2px solid #b3ecec;
-      max-width: 500px;
+      max-width: 550px;
       width: 100%;
     }
     .game-title {
@@ -242,28 +242,35 @@
       border-radius: 24px;
       box-shadow: inset 0 0 0 2px #d6ffff, 0 8px 0 #307a7a, 0 10px 15px rgba(0,60,60,0.25);
       border: 2px solid #e2ffff;
-      cursor: pointer;
+      cursor: grab;
       touch-action: none;
     }
     .stats-panel {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 6px;
+      gap: 8px;
       margin: 12px 4px 8px;
     }
     .stat-box {
       background: #d9f6f6;
       padding: 6px 12px;
       border-radius: 30px;
-      font-size: clamp(0.7rem, 3vw, 0.9rem);
+      font-size: clamp(0.8rem, 3.5vw, 1rem);
       font-weight: 700;
       color: #005f5f;
       box-shadow: inset 0 2px 4px #b2e0e0, 0 3px 0 #1f7a7a;
       border: 1px solid #aaf0f0;
       flex: 1 1 auto;
       text-align: center;
-      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .heart-icon {
+      font-size: 1.2rem;
+      letter-spacing: 2px;
     }
     .game-buttons {
       display: flex;
@@ -318,23 +325,11 @@
       background: #c38c5b;
     }
 
-    /* Small screen fine-tuning */
     @media (max-width: 480px) {
       body { padding: 1.5vw; }
-      #message {
-        padding: 1rem 1.2rem;
-        width: 95%;
-      }
-      .stats-panel {
-        flex-direction: column;
-        gap: 5px;
-      }
-      .stat-box {
-        width: 100%;
-      }
-      .game-buttons {
-        flex-direction: row;
-      }
+      #message { padding: 1rem 1.2rem; width: 95%; }
+      .stats-panel { flex-direction: column; gap: 5px; }
+      .stat-box { width: 100%; }
     }
 
     @keyframes shake {
@@ -373,7 +368,7 @@
     </div>
   </div>
 
-  <!-- Game container (compact) -->
+  <!-- Game container with BUCKET & RAINING CINNAMOROLLS (3 LIVES) -->
   <div id="gameContainer">
     <div class="game-card">
       <div class="game-title">
@@ -381,22 +376,17 @@
       </div>
       <canvas id="gameCanvas" width="500" height="500"></canvas>
       <div class="stats-panel">
-        <div class="stat-box">🏆 Rekordi: <span id="highScoreDisplay">0</span></div>
-        <div class="stat-box">⏱️ Koha totale: <span id="totalTimeDisplay">0</span>s</div>
-      </div>
-      <div class="stats-panel">
-        <div class="stat-box">🐾 Pikët: <span id="scoreDisplay">0</span></div>
-        <div class="stat-box">🎯 Kjo lojë: <span id="sessionTimeDisplay">0</span>s</div>
+        <div class="stat-box">Të kapur: <span id="scoreDisplay">0</span></div>
+        <div class="stat-box">Jet: <span id="livesDisplay">❤️❤️❤️</span></div>
       </div>
       <div class="game-buttons">
-        <button class="game-btn" id="resetGameBtn">🔄 Rifillo</button>
+        <button class="game-btn" id="resetGameBtn">🔄 Rifillo lojën</button>
         <button class="game-btn" id="backBtn">⬅️ Kthehu</button>
       </div>
-      <div class="hint">Kliko Cinnamoroll! Shpejtësia rritet çdo herë.</div>
+      <div class="hint"></div>
     </div>
   </div>
 
-  <!-- 🎵 AUDIO ELEMENT WITH LOOP ATTRIBUTE 🎵 -->
   <audio id="music" loop preload="auto">
     <source src="song.mp3" type="audio/mpeg">
     Shfletuesi yt nuk e mbështet audio-n.
@@ -404,7 +394,7 @@
 
   <script>
     (function() {
-      // ---------- BIRTHDAY WEBSITE LOGIC ----------
+      // ---------- BIRTHDAY WEBSITE LOGIC (countdown, password, message, music) ----------
       const correctPassword = "trilece";
       const passwordScreen = document.getElementById('passwordScreen');
       const passwordInput = document.getElementById('passwordInput');
@@ -420,14 +410,10 @@
 
       let musicFadeInterval = null;
       let musicPlaying = false;
-      let musicLoadFailed = false;   // ← flag for missing audio
+      let musicLoadFailed = false;
       let countdownFinished = false;
 
-      // 👇 If song.mp3 is missing, just continue quietly
-      music.addEventListener('error', () => {
-        musicLoadFailed = true;
-        console.log('🎵 Song not found – continuing without music.');
-      });
+      music.addEventListener('error', () => { musicLoadFailed = true; });
 
       function checkPassword() {
         const input = passwordInput.value.trim().toLowerCase();
@@ -441,14 +427,11 @@
           setTimeout(() => box.style.animation = '', 400);
         }
       }
-
       unlockBtn.addEventListener('click', checkPassword);
-      passwordInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') checkPassword();
-      });
+      passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') checkPassword(); });
 
       function startMusic() {
-        if (musicPlaying || musicLoadFailed) return;   // ← skip if song missing
+        if (musicPlaying || musicLoadFailed) return;
         music.volume = 0;
         music.play().then(() => {
           musicPlaying = true;
@@ -456,17 +439,10 @@
           if (musicFadeInterval) clearInterval(musicFadeInterval);
           musicFadeInterval = setInterval(() => {
             vol += 0.08;
-            if (vol >= 1) {
-              vol = 1;
-              clearInterval(musicFadeInterval);
-              musicFadeInterval = null;
-            }
+            if (vol >= 1) { vol = 1; clearInterval(musicFadeInterval); musicFadeInterval = null; }
             music.volume = vol;
           }, 80);
-        }).catch(() => {
-          // If play fails for any other reason, mark as failed and continue
-          musicLoadFailed = true;
-        });
+        }).catch(() => { musicLoadFailed = true; });
       }
 
       const fullText = 'Të uroj gjithë të mirat në ditëlindjen tënde dhe shpresoj që po ja kalon mirë! \n\nDoja të të thoja që ke qenë shoqja ime më e mirë në botë dhe dua të të them sa shumë do të thotë për mua. Të dua shumë dhe jam shumë me fat që të kam në jetën time, dhe faleminderit që më ke mbështetur kudo dhe çdo herë. \n\nShpresoj që të jemi sa më mirë!!!';
@@ -500,17 +476,14 @@
 
       function getTargetDate() {
         const now = new Date();
-        const target = new Date(now.getFullYear(), 3, 16); // April 16
+        const target = new Date(now.getFullYear(), 3, 16);
         target.setHours(0, 0, 0, 0);
         return target;
       }
-
       const target = getTargetDate();
-
       function updateCountdown() {
         const now = new Date();
         const diff = target - now;
-
         if (diff <= 0) {
           if (!countdownFinished) {
             countdownScreen.style.display = "none";
@@ -519,14 +492,12 @@
           }
           return;
         }
-
         const d = Math.floor(diff / (1000 * 60 * 60 * 24));
         const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
         const m = Math.floor((diff / (1000 * 60)) % 60);
         const s = Math.floor((diff / 1000) % 60);
         countdownEl.innerHTML = `${d}d ${h}h ${m}m ${s}s`;
       }
-
       window.addEventListener('load', () => {
         passwordScreen.style.display = 'none';
         countdownScreen.style.display = 'flex';
@@ -534,386 +505,347 @@
         setInterval(updateCountdown, 1000);
       });
 
-      // ---------- GAME LOGIC ----------
+      // ---------- NEW GAME: CATCH RAINING CINNAMOROLLS WITH BUCKET & 3 LIVES ----------
       const gameContainer = document.getElementById('gameContainer');
       const canvas = document.getElementById('gameCanvas');
       const ctx = canvas.getContext('2d');
       const scoreSpan = document.getElementById('scoreDisplay');
-      const highScoreSpan = document.getElementById('highScoreDisplay');
-      const totalTimeSpan = document.getElementById('totalTimeDisplay');
-      const sessionTimeSpan = document.getElementById('sessionTimeDisplay');
+      const livesSpan = document.getElementById('livesDisplay');
 
-      let score = 0;
-      let speed = 3.2;
-      const BASE_SPEED = 3.2;
-      const SPEED_MULTIPLIER = 1.35;
-      let cinnaX = 250, cinnaY = 250;
-      const CINNA_RADIUS = 48;
-      let dirX = 0.8, dirY = 0.6;
+      // Game dimensions
+      let canvasWidth = 500, canvasHeight = 500;
+      canvas.width = canvasWidth;
+      canvas.height = canvasHeight;
+
+      // Bucket settings
+      const BUCKET_WIDTH = 90;
+      const BUCKET_HEIGHT = 32;
+      const BUCKET_Y = canvasHeight - BUCKET_HEIGHT - 10;
+      let bucketX = (canvasWidth / 2) - (BUCKET_WIDTH / 2);
+
+      // Falling Cinnamorolls
+      let cinnamorolls = [];
+      const BASE_FALL_SPEED = 140;     // pixels per second
+      const SPEED_VARIATION = 40;
+      const CINNA_RADIUS = 24;          // a bit smaller for 500px canvas
+
+      // Game state
+      let caughtCount = 0;
+      let lives = 3;
+      let gameActive = false;            // becomes true when game starts
       let animationId = null;
-      let gameActive = false;
+      let spawnTimeout = null;
+      let lastTimestamp = 0;
 
-      let sessionStartTime = null;
-      let sessionTimerInterval = null;
-      let totalPlayTime = parseInt(localStorage.getItem('cinnaTotalTime')) || 0;
-      let highScore = parseInt(localStorage.getItem('cinnaHighScore')) || 0;
-      highScoreSpan.textContent = highScore;
-      totalTimeSpan.textContent = totalPlayTime;
-
-      function normalizeDirection() {
-        const len = Math.hypot(dirX, dirY);
-        if (len > 0.001) { dirX /= len; dirY /= len; }
-        else { dirX = 1; dirY = 0; }
+      // UI update
+      function updateUI() {
+        scoreSpan.innerText = caughtCount;
+        let hearts = "";
+        for (let i = 0; i < lives; i++) hearts += "❤️ ";
+        for (let i = lives; i < 3; i++) hearts += "🖤 ";
+        livesSpan.innerText = hearts.trim() || "💔";
       }
 
-      function randomizeDirection() {
-        let angle = Math.random() * Math.PI * 2;
-        dirX = Math.cos(angle);
-        dirY = Math.sin(angle);
-      }
-
-      function clampPosition() {
-        const minX = CINNA_RADIUS, maxX = canvas.width - CINNA_RADIUS;
-        const minY = CINNA_RADIUS, maxY = canvas.height - CINNA_RADIUS;
-        cinnaX = Math.min(maxX, Math.max(minX, cinnaX));
-        cinnaY = Math.min(maxY, Math.max(minY, cinnaY));
-      }
-
-      function handleWallCollision() {
-        const r = CINNA_RADIUS;
-        let bounced = false;
-        if (cinnaX - r < 0) { cinnaX = r; dirX = -dirX; bounced = true; }
-        else if (cinnaX + r > canvas.width) { cinnaX = canvas.width - r; dirX = -dirX; bounced = true; }
-        if (cinnaY - r < 0) { cinnaY = r; dirY = -dirY; bounced = true; }
-        else if (cinnaY + r > canvas.height) { cinnaY = canvas.height - r; dirY = -dirY; bounced = true; }
-        if (bounced) normalizeDirection();
-      }
-
-      function updatePosition() {
-        cinnaX += dirX * speed;
-        cinnaY += dirY * speed;
-        handleWallCollision();
-        clampPosition();
-      }
-
+      // Draw cute Cinnamoroll (simplified but adorable)
       function drawCinnamoroll(x, y, r) {
         ctx.save();
-        ctx.shadowColor = '#5b9b9b';
-        ctx.shadowBlur = 14;
-        ctx.shadowOffsetY = 4;
-
-        const bodyGrad = ctx.createRadialGradient(x-8, y-8, r*0.2, x, y, r*1.1);
-        bodyGrad.addColorStop(0, '#FFFFFF');
-        bodyGrad.addColorStop(0.7, '#F5F9FF');
-        bodyGrad.addColorStop(1, '#E0EAF5');
-        ctx.beginPath();
-        ctx.ellipse(x, y, r*1.1, r*0.98, 0, 0, Math.PI*2);
-        ctx.fillStyle = bodyGrad;
-        ctx.fill();
-        ctx.shadowBlur = 8;
-        ctx.strokeStyle = '#C8DDE8';
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.ellipse(x - r*0.65, y - r*0.55, r*0.28, r*0.75, -0.25, 0, Math.PI*2);
-        const leftEarGrad = ctx.createLinearGradient(x - r*0.8, y - r*0.9, x - r*0.5, y);
-        leftEarGrad.addColorStop(0, '#FFFFFF');
-        leftEarGrad.addColorStop(1, '#F0F5FA');
-        ctx.fillStyle = leftEarGrad;
-        ctx.fill();
-        ctx.strokeStyle = '#C8DDE8';
-        ctx.lineWidth = 2.2;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.ellipse(x - r*0.65, y - r*0.55, r*0.14, r*0.5, -0.25, 0, Math.PI*2);
-        const innerEarGrad = ctx.createRadialGradient(x - r*0.7, y - r*0.7, 2, x - r*0.6, y - r*0.5, r*0.4);
-        innerEarGrad.addColorStop(0, '#FFB0C3');
-        innerEarGrad.addColorStop(1, '#FFD0DC');
-        ctx.fillStyle = innerEarGrad;
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.ellipse(x + r*0.65, y - r*0.55, r*0.28, r*0.75, 0.25, 0, Math.PI*2);
-        const rightEarGrad = ctx.createLinearGradient(x + r*0.5, y - r*0.9, x + r*0.8, y);
-        rightEarGrad.addColorStop(0, '#FFFFFF');
-        rightEarGrad.addColorStop(1, '#F0F5FA');
-        ctx.fillStyle = rightEarGrad;
-        ctx.fill();
-        ctx.strokeStyle = '#C8DDE8';
-        ctx.lineWidth = 2.2;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.ellipse(x + r*0.65, y - r*0.55, r*0.14, r*0.5, 0.25, 0, Math.PI*2);
-        ctx.fillStyle = innerEarGrad;
-        ctx.fill();
-
         ctx.shadowBlur = 6;
+        ctx.shadowColor = "#5f9e9e";
+        // body
         ctx.beginPath();
-        ctx.ellipse(x - r*0.2, y - r*0.65, r*0.22, r*0.16, -0.1, 0, Math.PI*2);
-        ctx.fillStyle = '#FFA5B9';
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fillStyle = "#FFFEF5";
         ctx.fill();
-        ctx.strokeStyle = '#E07A8F';
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.ellipse(x + r*0.2, y - r*0.65, r*0.22, r*0.16, 0.1, 0, Math.PI*2);
-        ctx.fill();
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(x, y - r*0.63, r*0.1, 0, 2*Math.PI);
-        ctx.fillStyle = '#FF7A95';
-        ctx.fill();
-        ctx.strokeStyle = '#E06A85';
+        ctx.strokeStyle = "#FFD9E6";
         ctx.lineWidth = 1.5;
         ctx.stroke();
+        // ears
         ctx.beginPath();
-        ctx.moveTo(x - r*0.05, y - r*0.53);
-        ctx.lineTo(x - r*0.3, y - r*0.4);
-        ctx.lineTo(x - r*0.1, y - r*0.5);
-        ctx.fillStyle = '#FFB0C3';
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(x + r*0.05, y - r*0.53);
-        ctx.lineTo(x + r*0.3, y - r*0.4);
-        ctx.lineTo(x + r*0.1, y - r*0.5);
-        ctx.fill();
-
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
-        ctx.beginPath();
-        ctx.arc(x - r*0.3, y - r*0.1, r*0.18, 0, 2*Math.PI);
-        const eyeGrad = ctx.createRadialGradient(x - r*0.35, y - r*0.15, 2, x - r*0.3, y - r*0.1, r*0.18);
-        eyeGrad.addColorStop(0, '#6BB5E0');
-        eyeGrad.addColorStop(1, '#2A6F9C');
-        ctx.fillStyle = eyeGrad;
-        ctx.fill();
-        ctx.strokeStyle = '#1C5F8E';
-        ctx.lineWidth = 1.8;
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.arc(x - r*0.38, y - r*0.18, r*0.06, 0, 2*Math.PI);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x - r*0.26, y - r*0.05, r*0.03, 0, 2*Math.PI);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(x + r*0.3, y - r*0.1, r*0.18, 0, 2*Math.PI);
-        ctx.fillStyle = eyeGrad;
+        ctx.ellipse(x - r*0.6, y - r*0.75, r*0.45, r*0.7, -0.35, 0, Math.PI*2);
+        ctx.fillStyle = "#FFF5EB";
         ctx.fill();
         ctx.stroke();
         ctx.beginPath();
-        ctx.arc(x + r*0.22, y - r*0.18, r*0.06, 0, 2*Math.PI);
-        ctx.fillStyle = '#FFFFFF';
+        ctx.ellipse(x + r*0.6, y - r*0.75, r*0.45, r*0.7, 0.35, 0, Math.PI*2);
         ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x + r*0.34, y - r*0.05, r*0.03, 0, 2*Math.PI);
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.moveTo(x - r*0.15, y + r*0.12);
-        ctx.quadraticCurveTo(x, y + r*0.28, x + r*0.15, y + r*0.12);
-        ctx.strokeStyle = '#C06A7A';
-        ctx.lineWidth = 2.5;
-        ctx.lineCap = 'round';
         ctx.stroke();
-
-        const blushGrad = ctx.createRadialGradient(x - r*0.5, y + r*0.05, 2, x - r*0.5, y + r*0.05, r*0.15);
-        blushGrad.addColorStop(0, '#FFB6C1');
-        blushGrad.addColorStop(1, '#FFD0D8');
+        // inner ears
+        ctx.fillStyle = "#FFC2D4";
         ctx.beginPath();
-        ctx.arc(x - r*0.5, y + r*0.05, r*0.14, 0, 2*Math.PI);
-        ctx.fillStyle = blushGrad;
-        ctx.globalAlpha = 0.55;
+        ctx.ellipse(x - r*0.55, y - r*0.65, r*0.25, r*0.45, -0.3, 0, Math.PI*2);
         ctx.fill();
         ctx.beginPath();
-        ctx.arc(x + r*0.5, y + r*0.05, r*0.14, 0, 2*Math.PI);
+        ctx.ellipse(x + r*0.55, y - r*0.65, r*0.25, r*0.45, 0.3, 0, Math.PI*2);
         ctx.fill();
-        ctx.globalAlpha = 1.0;
-
-        ctx.shadowBlur = 10;
+        // eyes
+        ctx.fillStyle = "#5D9BEC";
         ctx.beginPath();
-        ctx.arc(x - r*0.85, y + r*0.15, r*0.2, 0, 2*Math.PI);
-        const tailGrad = ctx.createRadialGradient(x - r*0.9, y + r*0.1, 2, x - r*0.8, y + r*0.2, r*0.2);
-        tailGrad.addColorStop(0, '#FFFFFF');
-        tailGrad.addColorStop(1, '#E8F0F8');
-        ctx.fillStyle = tailGrad;
+        ctx.arc(x - r*0.35, y - r*0.1, r*0.16, 0, Math.PI*2);
         ctx.fill();
-        ctx.strokeStyle = '#C8DDE8';
+        ctx.beginPath();
+        ctx.arc(x + r*0.35, y - r*0.1, r*0.16, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(x - r*0.42, y - r*0.18, r*0.05, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x + r*0.28, y - r*0.18, r*0.05, 0, Math.PI*2);
+        ctx.fill();
+        // blush & smile
+        ctx.fillStyle = "#FFA9C4";
+        ctx.beginPath();
+        ctx.ellipse(x - r*0.5, y + r*0.1, r*0.12, r*0.08, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(x + r*0.5, y + r*0.1, r*0.12, r*0.08, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y + r*0.18, r*0.08, 0.05, Math.PI - 0.05);
+        ctx.strokeStyle = "#CB6E8E";
         ctx.lineWidth = 1.8;
         ctx.stroke();
         ctx.restore();
       }
 
-      function drawScene() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#c1efef90';
-        ctx.shadowColor = '#6eaeae';
-        ctx.shadowBlur = 20;
+      function drawBucket(x, y, w, h) {
+        ctx.save();
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = "rgba(0,0,0,0.2)";
         ctx.beginPath();
-        ctx.arc(80, 70, 45, 0, Math.PI*2);
-        ctx.arc(130, 50, 35, 0, Math.PI*2);
-        ctx.arc(170, 80, 30, 0, Math.PI*2);
+        ctx.roundRect(x, y, w, h, 10);
+        ctx.fillStyle = "#E7B874";
         ctx.fill();
+        ctx.strokeStyle = "#B97F44";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // wood planks
         ctx.beginPath();
-        ctx.arc(420, 130, 40, 0, Math.PI*2);
-        ctx.arc(470, 100, 30, 0, Math.PI*2);
-        ctx.arc(380, 90, 25, 0, Math.PI*2);
-        ctx.fill();
-        ctx.shadowBlur = 0;
-        drawCinnamoroll(cinnaX, cinnaY, CINNA_RADIUS);
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
+        ctx.moveTo(x+8, y); ctx.lineTo(x+8, y+h);
+        ctx.moveTo(x+w-8, y); ctx.lineTo(x+w-8, y+h);
+        ctx.moveTo(x+w/2, y); ctx.lineTo(x+w/2, y+h);
+        ctx.strokeStyle = "#C2894A";
+        ctx.stroke();
+        // rim
+        ctx.fillStyle = "#CFA05C";
+        ctx.fillRect(x-2, y-4, w+4, 6);
+        ctx.fillStyle = "#B07D42";
+        ctx.fillRect(x-1, y-3, w+2, 4);
+        // handle
+        ctx.beginPath();
+        ctx.ellipse(x+w/2, y-10, w*0.3, 10, 0, 0, Math.PI*2);
+        ctx.strokeStyle = "#A56B2F";
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.restore();
       }
 
-      function isClickOnCinna(clickX, clickY) {
-        return Math.hypot(clickX - cinnaX, clickY - cinnaY) <= CINNA_RADIUS * 1.1;
+      // roundRect helper
+      if (!CanvasRenderingContext2D.prototype.roundRect) {
+        CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+          if (w < 2*r) r = w/2;
+          if (h < 2*r) r = h/2;
+          this.moveTo(x+r, y);
+          this.lineTo(x+w-r, y);
+          this.quadraticCurveTo(x+w, y, x+w, y+r);
+          this.lineTo(x+w, y+h-r);
+          this.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+          this.lineTo(x+r, y+h);
+          this.quadraticCurveTo(x, y+h, x, y+h-r);
+          this.lineTo(x, y+r);
+          this.quadraticCurveTo(x, y, x+r, y);
+          return this;
+        };
       }
 
-      function updateHighScore() {
-        if (score > highScore) {
-          highScore = score;
-          localStorage.setItem('cinnaHighScore', highScore);
-          highScoreSpan.textContent = highScore;
+      function isCollision(circle, rectX, rectY, rectW, rectH) {
+        const closestX = Math.max(rectX, Math.min(circle.x, rectX + rectW));
+        const closestY = Math.max(rectY, Math.min(circle.y, rectY + rectH));
+        const dx = circle.x - closestX;
+        const dy = circle.y - closestY;
+        return Math.sqrt(dx*dx + dy*dy) < circle.radius;
+      }
+
+      function addCinnamoroll() {
+        if (!gameActive) return;
+        const randX = CINNA_RADIUS + Math.random() * (canvasWidth - CINNA_RADIUS * 2);
+        let fallSpeed = BASE_FALL_SPEED + (Math.random() - 0.5) * SPEED_VARIATION * 2;
+        fallSpeed = Math.min(240, Math.max(120, fallSpeed));
+        cinnamorolls.push({
+          x: randX,
+          y: -CINNA_RADIUS,
+          radius: CINNA_RADIUS,
+          speedPxPerSec: fallSpeed
+        });
+      }
+
+      function scheduleSpawn() {
+        if (!gameActive) return;
+        if (spawnTimeout) clearTimeout(spawnTimeout);
+        const delay = 700 + Math.random() * 800;
+        spawnTimeout = setTimeout(() => {
+          if (gameActive) {
+            addCinnamoroll();
+            scheduleSpawn();
+          }
+        }, delay);
+      }
+
+      function loseLife() {
+        if (!gameActive) return;
+        lives--;
+        updateUI();
+        if (lives <= 0) {
+          lives = 0;
+          updateUI();
+          gameActive = false;
+          if (spawnTimeout) clearTimeout(spawnTimeout);
+        } else {
+          // shake effect
+          livesSpan.style.transform = "scale(1.1)";
+          setTimeout(() => { if(livesSpan) livesSpan.style.transform = ""; }, 200);
         }
       }
 
-      function caughtCinnamoroll() {
-        score++;
-        scoreSpan.textContent = score;
-        updateHighScore();
-        speed *= SPEED_MULTIPLIER;
-        const r = CINNA_RADIUS;
-        cinnaX = Math.random() * (canvas.width - 2*r) + r;
-        cinnaY = Math.random() * (canvas.height - 2*r) + r;
-        randomizeDirection();
-        normalizeDirection();
-      }
-
-      function resetGame() {
-        score = 0;
-        speed = BASE_SPEED;
-        scoreSpan.textContent = '0';
-        cinnaX = canvas.width/2;
-        cinnaY = canvas.height/2;
-        randomizeDirection();
-        normalizeDirection();
-        drawScene();
-      }
-
-      function gameLoop() {
+      function updateGame(deltaSec) {
         if (!gameActive) return;
-        updatePosition();
+        if (deltaSec > 0.035) deltaSec = 0.035;
+        // move
+        for (let c of cinnamorolls) c.y += c.speedPxPerSec * deltaSec;
+        const bucketRect = { x: bucketX, y: BUCKET_Y, w: BUCKET_WIDTH, h: BUCKET_HEIGHT };
+        const remaining = [];
+        for (let c of cinnamorolls) {
+          if (isCollision(c, bucketRect.x, bucketRect.y, bucketRect.w, bucketRect.h)) {
+            caughtCount++;
+            updateUI();
+            continue;
+          }
+          if (c.y + c.radius > canvasHeight) {
+            loseLife();
+            continue;
+          }
+          remaining.push(c);
+        }
+        cinnamorolls = remaining;
+      }
+
+      function drawScene() {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        // sky gradient
+        const grad = ctx.createLinearGradient(0, 0, 0, canvasHeight);
+        grad.addColorStop(0, "#b0e6e6");
+        grad.addColorStop(1, "#7acccc");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+        // clouds
+        ctx.fillStyle = "#FFF9F0CC";
+        ctx.shadowBlur = 6;
+        ctx.beginPath();
+        ctx.ellipse(70, 50, 40, 35, 0, 0, Math.PI*2);
+        ctx.ellipse(120, 60, 48, 38, 0, 0, Math.PI*2);
+        ctx.ellipse(30, 70, 38, 32, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(430, 80, 45, 38, 0, 0, Math.PI*2);
+        ctx.ellipse(470, 65, 40, 33, 0, 0, Math.PI*2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        // draw falling cinnas
+        for (let c of cinnamorolls) drawCinnamoroll(c.x, c.y, c.radius);
+        drawBucket(bucketX, BUCKET_Y, BUCKET_WIDTH, BUCKET_HEIGHT);
+        // game over overlay
+        if (!gameActive && lives === 0) {
+          ctx.font = "bold 24px 'Nunito'";
+          ctx.fillStyle = "#c4456ecc";
+          ctx.shadowBlur = 0;
+          ctx.fillText("💔 GAME OVER 💔", canvasWidth/2-110, canvasHeight/2-30);
+          ctx.font = "16px 'Nunito'";
+          ctx.fillStyle = "#aa5577";
+          ctx.fillText("Shtyp 'Rifillo lojën'", canvasWidth/2-95, canvasHeight/2+20);
+        }
+      }
+
+      function gameLoop(nowMs) {
+        if (!gameActive && lives === 0) {
+          drawScene();
+          animationId = requestAnimationFrame(gameLoop);
+          return;
+        }
+        if (!lastTimestamp) { lastTimestamp = nowMs; drawScene(); animationId = requestAnimationFrame(gameLoop); return; }
+        let delta = Math.min(0.033, (nowMs - lastTimestamp) / 1000);
+        if (delta > 0.002 && gameActive) updateGame(delta);
         drawScene();
+        lastTimestamp = nowMs;
         animationId = requestAnimationFrame(gameLoop);
       }
 
-      function startGameLoop() {
+      function startGame() {
         if (animationId) cancelAnimationFrame(animationId);
+        if (spawnTimeout) clearTimeout(spawnTimeout);
+        // reset state
+        cinnamorolls = [];
+        caughtCount = 0;
+        lives = 3;
         gameActive = true;
+        updateUI();
+        bucketX = (canvasWidth / 2) - (BUCKET_WIDTH / 2);
+        lastTimestamp = 0;
+        scheduleSpawn();
         animationId = requestAnimationFrame(gameLoop);
       }
 
-      function stopGameLoop() {
+      function stopGameAndReset() {
         gameActive = false;
+        if (spawnTimeout) clearTimeout(spawnTimeout);
         if (animationId) cancelAnimationFrame(animationId);
         animationId = null;
+        cinnamorolls = [];
       }
 
-      function startSessionTimer() {
-        sessionStartTime = Date.now();
-        if (sessionTimerInterval) clearInterval(sessionTimerInterval);
-        sessionTimerInterval = setInterval(() => {
-          const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
-          sessionTimeSpan.textContent = elapsed;
-        }, 1000);
+      // Event handlers for bucket movement
+      function updateBucketPosition(clientX) {
+        if (!gameActive) return;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        let canvasX = (clientX - rect.left) * scaleX;
+        canvasX = Math.min(Math.max(canvasX, 0), canvasWidth);
+        let newX = canvasX - (BUCKET_WIDTH / 2);
+        newX = Math.min(Math.max(newX, 0), canvasWidth - BUCKET_WIDTH);
+        bucketX = newX;
       }
+      function onMouseMove(e) { updateBucketPosition(e.clientX); }
+      function onTouchMove(e) { e.preventDefault(); if(e.touches.length) updateBucketPosition(e.touches[0].clientX); }
+      function onTouchStart(e) { e.preventDefault(); if(e.touches.length) updateBucketPosition(e.touches[0].clientX); }
 
-      function stopSessionTimer() {
-        if (sessionTimerInterval) {
-          clearInterval(sessionTimerInterval);
-          sessionTimerInterval = null;
-        }
-        if (sessionStartTime) {
-          const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
-          totalPlayTime += elapsed;
-          localStorage.setItem('cinnaTotalTime', totalPlayTime);
-          totalTimeSpan.textContent = totalPlayTime;
-          sessionTimeSpan.textContent = '0';
-          sessionStartTime = null;
-        }
-      }
-
+      // UI buttons integration
       function showGame() {
         document.querySelector('h1').style.display = 'none';
         btn.style.display = 'none';
         messageDiv.style.display = 'none';
         gameContainer.style.display = 'flex';
-        resetGame();
-        startSessionTimer();
-        startGameLoop();
+        startGame();
       }
-
       function hideGame() {
-        stopGameLoop();
-        stopSessionTimer();
+        stopGameAndReset();
         gameContainer.style.display = 'none';
         if (passwordScreen.style.display !== 'flex' && countdownScreen.style.display !== 'flex') {
           document.querySelector('h1').style.display = 'block';
-          if (typingFinished) {
-            messageDiv.style.display = 'block';
-            luajBtn.style.display = 'inline-block';
-          } else {
-            btn.style.display = 'block';
-          }
+          if (typingFinished) { messageDiv.style.display = 'block'; luajBtn.style.display = 'inline-block'; }
+          else { btn.style.display = 'block'; }
         }
       }
-
-      function handleCanvasInteraction(e) {
-        if (!gameActive) return;
-        e.preventDefault();
-        const rect = canvas.getBoundingClientRect();
-        const scaleX = canvas.width / rect.width;
-        const scaleY = canvas.height / rect.height;
-        let clientX, clientY;
-        if (e.touches) {
-          clientX = e.touches[0].clientX;
-          clientY = e.touches[0].clientY;
-        } else {
-          clientX = e.clientX;
-          clientY = e.clientY;
-        }
-        const canvasX = (clientX - rect.left) * scaleX;
-        const canvasY = (clientY - rect.top) * scaleY;
-        if (isClickOnCinna(canvasX, canvasY)) {
-          caughtCinnamoroll();
-          drawScene();
-        }
-      }
-
-      canvas.addEventListener('click', handleCanvasInteraction);
-      canvas.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        handleCanvasInteraction(e);
-      }, { passive: false });
-      canvas.addEventListener('contextmenu', (e) => e.preventDefault());
-
-      document.getElementById('resetGameBtn').addEventListener('click', () => {
-        resetGame();
-        drawScene();
-      });
-
+      document.getElementById('resetGameBtn').addEventListener('click', () => { stopGameAndReset(); startGame(); });
       document.getElementById('backBtn').addEventListener('click', hideGame);
-
       luajBtn.addEventListener('click', showGame);
 
-      resetGame();
-      drawScene();
+      canvas.addEventListener('mousemove', onMouseMove);
+      canvas.addEventListener('touchmove', onTouchMove, { passive: false });
+      canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+      canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+      // initial draw (idle)
+      startGame();  // will be active only after showing container, but we stop it on hide
+      hideGame();   // start hidden, but game loop stops
     })();
   </script>
 </body>
